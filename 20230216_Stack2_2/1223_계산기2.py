@@ -10,20 +10,21 @@ def change(txt):
             new_txt += i
         # 연산자이면 스택에 저장
         else:
-            if stack and op[stack[-1]] > op[i]:
-                while stack:
-                    new_txt += stack.pop()
-                stack.append(i)
-
-            else:
-                stack.append(i)
-                
-            # 뭐가 다른지 생각해보기
-            # 아마 *이 연속되는 부분에서 오류가 떴는데 그 차이에 대해서 생각해보자 
-            # while stack and op[stack[-1]] >= op[i]:
-            #     new_txt += stack.pop()
+            # if stack and op[stack[-1]] > op[i]:     # 해당 조건이 만족하면
+            #     while stack:                        # 스택 싹 긁어오기. 나중가면 예외 케이스가 나올 거 같다.
+            #         new_txt += stack.pop()
+            #     stack.append(i)
             #
-            # stack.append(i)
+            # else:
+            #     stack.append(i)
+
+            # 뭐가 다른지 생각해보기
+            # 아마 *이 연속되는 부분에서 오류가 떴는데 그 차이에 대해서 생각해보자
+            # 빼고 바로바로 비교하는게 안전!!!!!
+            while stack and op[stack[-1]] >= op[i]:
+                new_txt += stack.pop()
+
+            stack.append(i)
 
     while stack:
         new_txt += stack.pop()
@@ -32,7 +33,6 @@ def change(txt):
 
 
 def cal(txt):
-
     op = ['+', '*']
     stack = []
 
@@ -59,7 +59,7 @@ def cal(txt):
     return stack[-1]
 
 
-for tc in range(1, 11):
+for tc in range(1, 2):
     n = int(input())
     formula = list(input())
 
@@ -68,5 +68,5 @@ for tc in range(1, 11):
     # 계산
     result = cal(new_formula)
 
-    # print(new_formula)
+    print(new_formula)
     print(f'#{tc}', result)
