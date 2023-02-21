@@ -2,7 +2,8 @@ for tc in range(1, 11):
     N = input()
     nums = list(map(int, input().split()))
 
-    while True:
+    while nums[7] != 0:
+    # while True:                               # 같은 표현
         for i in range(1, 6):
             a = nums.pop(0) - i                 # 맨 앞 숫자 꺼내고 1~5 순으로 빼기
 
@@ -11,8 +12,8 @@ for tc in range(1, 11):
             else:
                 nums.append(0)
                 break
-        if a <= 0:                              # 0보다 작으면 반복문 종료
-            break
+        # if a <= 0:                              # 0보다 작으면 반복문 종료
+        #     break
 
     print(f'#{tc}', *nums)
 
