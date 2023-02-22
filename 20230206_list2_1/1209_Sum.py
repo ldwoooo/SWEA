@@ -94,3 +94,31 @@ for _ in range(10):
     ans = max(totalsum)
 
     print("#{} {}".format(T, ans))
+
+# ---------------------------------------------------------------------------------
+for tc in range(1, 11):
+    N = input()
+    arr = [list(map(int, input().split())) for _ in range(100)]
+
+    stack = []
+    cross = cross2 = 0
+    for i in range(len(arr)):
+        row = 0
+        for j in range(len(arr)):
+            row += arr[i][j]
+            if i == j:
+                cross += arr[i][j]
+            elif i + j == 100:
+                cross2 += arr[i][j]
+        stack.append(row)
+    stack.append(cross and cross2)
+
+    maxV = max(stack)
+    for j in range(len(arr)):
+        column = 0
+        for i in range(len(arr)):
+            column += arr[i][j]
+        if maxV < column:
+            maxV = column
+
+    print(f'#{tc}', maxV)
