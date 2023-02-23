@@ -1,26 +1,40 @@
-def inorder(i, N):
-    if i <= N:
-        inorder(i * 2, N)
-        arr.append(tree[i])
-        inorder(i * 2 + 1, N)
+def enq(i):
+
+    if tree[i] not in op:
+        return tree[i]
+    else:
+        r1 = enq(left[i])
+        r2 = enq(right[i])
+
+        if tree[i] == '+':
+            tree[i] = r1 + r2
+        elif tree[i] == '-':
+            tree[i] = r1 - r2
+        elif tree[i] == '*':
+            tree[i] = r1 * r2
+        elif tree[i] == '/':
+            tree[i] = r1 // r2
+
+        return tree[i]
 
 
-for tc in range(1, 3):
+for tc in range(1, 11):
     N = int(input())
 
     tree = [0] * (N + 1)
+    left = [0] * (N + 1)
+    right = [0] * (N + 1)
+    op = ['+', '-', '*', '/']
+
     for _ in range(N):
         info = input().split()
-
         node = int(info[0])
-        math = info[1]
 
-        for _ in range(N + 1):
-            tree[node] = math
-    arr = []
-    inorder(1, N)
+        if len(info) == 4:
+            tree[node] = info[1]
+            left[node] = int(info[2])
+            right[node] = int(info[3])
+        else:
+            tree[node] = int(info[1])
 
-    for i in range(N):
-        if i == ''():
-
-    print(arr)
+    print(f'#{tc}', enq(1))
