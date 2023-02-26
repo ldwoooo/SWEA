@@ -1,11 +1,11 @@
-def inorder(n):
+def preorder(n):
     # 전위순회
     global count
     if n == 0:
         return
     count += 1
-    inorder(left[n])                                    # 왼쪽 자식 순회
-    inorder(right[n])                                   # 오른쪽 자식 순회
+    preorder(left[n])                                    # 왼쪽 자식 순회
+    preorder(right[n])                                   # 오른쪽 자식 순회
 
 
 T = int(input())
@@ -26,5 +26,5 @@ for tc in range(1, T + 1):
     # print(right)
 
     count = 0
-    inorder(N)
+    preorder(N)
     print(f'#{tc}', count)
