@@ -53,4 +53,3 @@ for tc in range(1, T + 1):                          # 입력
         print(f'#{tc}', sum(result))
     else:
         print(f'#{tc}', 0)
-
