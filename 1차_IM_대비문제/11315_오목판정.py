@@ -1,59 +1,26 @@
-def row():
-    # 가로검사
+def check():
+    di = [0, 1, 1, 1]  # 오른쪽, 오른쪽 아래, 아래, 왼쪽 아래
+    dj = [1, 1, 0, -1]
+
     for i in range(N):
-        count = 0
         for j in range(N):
-            if omok[i][j] == 'o':
+            count = 0                               # 초기화 부분의 순서 매우 중요하다!!!!
+            k = 0
+            if omok[i][j] == 'o':                   # 돌을 만나면 냅다 카운트해주고 현재 위치를 기억해야하기 때문에 a, b에 따로 할당해준다.
                 count += 1
-                if count == 5:
-                    return True
-            else:
-                count = 0
-    return False
-
-
-def column():
-    # 세로검사
-    for j in range(N):
-        count = 0
-        for i in range(N):
-            if omok[i][j] == 'o':
-                count += 1
-                if count == 5:
-                    return True
-            else:
-                count = 0
-    return False
-
-
-def cross():
-    # 대각선(\) 검사
-    count = 0
-    for i in range(N):
-        for j in range(N):
-            if i == j:
-                if omok[i][j] == 'o':
-                    count += 1
-                    if count == 5:
-                        return True
-                else:
-                    count = 0
-    return False
-
-
-def cross2():
-    # 대각선(/) 검사
-    count = 0
-    for i in range(N):
-        for j in range(N):
-            if i + j == N - 1:
-                if omok[i][j] == 'o':
-                    count += 1
-                    if count == 5:
-                        return True
-                else:
-                    count = 0
-    return False
+                a, b = i, j
+                while k < 4:                        # 델타 방향을 다 돌면 while 문 종료
+                    ni, nj = a + di[k], b + dj[k]
+                    if (0 <= ni < N) and (0 <= nj < N) and omok[ni][nj] == 'o':     # 새로운 방향이 유효한 인덱스이고 돌이 있으면
+                        a, b = ni, nj
+                        count += 1
+                        if count == 5:              # 5개 연속 되면 YES 반환하고 함수 종료
+                            return 'YES'
+                    else:
+                        a, b = i, j                 # 현재 위치로 다시 돌아가
+                        k += 1                      # 델타 방향 바꿔주고
+                        count = 1
+    return 'NO'
 
 
 T = int(input())
@@ -62,7 +29,5 @@ for tc in range(1, T + 1):
     N = int(input())
     omok = [input() for _ in range(N)]
 
-    if row() or column() or cross() or cross2():
-        print(f'#{tc}', 'YES')
-    else:
-        print(f'#{tc}', 'NO')
+    print(f'#{tc}', end=' ')
+    print(check())
